@@ -305,6 +305,12 @@ label {
   gap: 1rem;
 }
 
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
 .result-item {
   padding: 0.75rem;
   border: 1px solid #ddd;
