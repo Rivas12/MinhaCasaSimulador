@@ -6,8 +6,7 @@ function App() {
     valor_apartamento: '',
     entrada: '',
     renda_familiar: '',
-    cotista_fgts: false,
-    usar_fgts: false,
+    cotista_fgts: false, // For CLT option
     taxa_juros_anual: '',
     prazo_meses: '',
     email: '',
@@ -25,10 +24,17 @@ function App() {
     }));
   };
 
+  const handleRadioChange = (e) => {
+    setFormData(prev => ({
+      ...prev,
+      cotista_fgts: e.target.value === 'sim'
+    }));
+  };
+
   const calcularParcela = () => {
     const valorImovel = parseFloat(formData.valor_apartamento || 0);
     const entrada = parseFloat(formData.entrada || 0);
-    const fgtsUsado = formData.cotista_fgts && formData.usar_fgts ? 20000 : 0;
+    const fgtsUsado = formData.cotista_fgts ? 20000 : 0; // Simplified for CLT
     const valorFinanciado = valorImovel - entrada - fgtsUsado;
 
     const prazo = parseInt(formData.prazo_meses || 0);
@@ -46,7 +52,6 @@ function App() {
     const parcela = calcularParcela();
     setParcelaMensal(parcela);
     setIsSubmitted(true);
-    console.log(formData);
   };
 
   const formatCurrency = (value) => {
@@ -59,47 +64,42 @@ function App() {
   return (
     <div className="simulator-container">
       <div className="simulator-card">
-        <h1>Simulador de Financiamento</h1>
-        <p className="subtitle">Preencha os dados abaixo para simular seu financiamento</p>
+        <h1 className="handwritten-title">Simulador minha casa minha vida</h1>
 
         <form onSubmit={handleSubmit}>
           <div className="form-row">
             {/* Valor do imóvel */}
             <div className="form-group">
-              <label htmlFor="valor_apartamento">Valor do Imóvel</label>
-              <div className="input-wrapper">
-                <span className="currency-symbol">R$</span>
-                <input
-                  type="number"
-                  id="valor_apartamento"
-                  name="valor_apartamento"
-                  value={formData.valor_apartamento}
-                  onChange={handleChange}
-                  placeholder="0,00"
-                  required
-                  min="0"
-                  step="0.01"
-                />
-              </div>
+              <label htmlFor="valor_apartamento">Valor do Imóvel aproximado</label>
+              <input
+                type="number"
+                id="valor_apartamento"
+                name="valor_apartamento"
+                value={formData.valor_apartamento}
+                onChange={handleChange}
+                placeholder=""
+                required
+                min="0"
+                step="0.01"
+                className="simple-input"
+              />
             </div>
 
             {/* Entrada */}
             <div className="form-group">
               <label htmlFor="entrada">Valor da Entrada</label>
-              <div className="input-wrapper">
-                <span className="currency-symbol">R$</span>
-                <input
-                  type="number"
-                  id="entrada"
-                  name="entrada"
-                  value={formData.entrada}
-                  onChange={handleChange}
-                  placeholder="0,00"
-                  required
-                  min="0"
-                  step="0.01"
-                />
-              </div>
+              <input
+                type="number"
+                id="entrada"
+                name="entrada"
+                value={formData.entrada}
+                onChange={handleChange}
+                placeholder=""
+                required
+                min="0"
+                step="0.01"
+                className="simple-input"
+              />
             </div>
           </div>
 
@@ -107,73 +107,38 @@ function App() {
             {/* Renda familiar */}
             <div className="form-group">
               <label htmlFor="renda_familiar">Renda Familiar Mensal</label>
-              <div className="input-wrapper">
-                <span className="currency-symbol">R$</span>
-                <input
-                  type="number"
-                  id="renda_familiar"
-                  name="renda_familiar"
-                  value={formData.renda_familiar}
-                  onChange={handleChange}
-                  placeholder="0,00"
-                  required
-                  min="0"
-                  step="0.01"
-                />
-              </div>
+              <input
+                type="number"
+                id="renda_familiar"
+                name="renda_familiar"
+                value={formData.renda_familiar}
+                onChange={handleChange}
+                placeholder=""
+                required
+                min="0"
+                step="0.01"
+                className="simple-input"
+              />
             </div>
 
-            <div className="form-group fgts-group">
-              {/* Cotista do FGTS */}
-              <div className="checkbox-group">
-                <label className="checkbox-container">
-                  <input
-                    type="checkbox"
-                    id="cotista_fgts"
-                    name="cotista_fgts"
-                    checked={formData.cotista_fgts}
-                    onChange={handleChange}
-                  />
-                  <span className="checkmark"></span>
-                  Sou cotista do FGTS
-                </label>
-              </div>
-
-              {/* Usar FGTS */}
-              {formData.cotista_fgts && (
-                <div className="checkbox-group">
-                  <label className="checkbox-container">
-                    <input
-                      type="checkbox"
-                      id="usar_fgts"
-                      name="usar_fgts"
-                      checked={formData.usar_fgts}
-                      onChange={handleChange}
-                    />
-                    <span className="checkmark"></span>
-                    Usar R$ 20.000 do FGTS como entrada
-                  </label>
-                </div>
-              )}
-            </div>
-          </div>
-
-          <div className="form-row">
             {/* Taxa de juros */}
             <div className="form-group">
-              <label htmlFor="taxa_juros_anual">Taxa de Juros Anual (%)</label>
+              <label htmlFor="taxa_juros_anual">Taxa de juros</label>
               <input
                 type="number"
                 id="taxa_juros_anual"
                 name="taxa_juros_anual"
                 value={formData.taxa_juros_anual}
                 onChange={handleChange}
-                placeholder="Taxa padrão: 9%"
+                placeholder=""
                 min="0"
                 step="0.01"
+                className="simple-input"
               />
             </div>
+          </div>
 
+          <div className="form-row">
             {/* Prazo */}
             <div className="form-group">
               <label htmlFor="prazo_meses">Prazo (meses)</label>
@@ -183,25 +148,54 @@ function App() {
                 name="prazo_meses"
                 value={formData.prazo_meses}
                 onChange={handleChange}
-                placeholder="Ex: 240"
+                placeholder=""
                 required
                 min="1"
+                className="simple-input"
               />
+            </div>
+
+            {/* CLT Radio Buttons */}
+            <div className="form-group">
+              <label>Você é CLT?</label>
+              <div className="radio-group">
+                <label className="radio-container">
+                  <input
+                    type="radio"
+                    name="clt_status"
+                    value="sim"
+                    checked={formData.cotista_fgts === true}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio-label">Sim</span>
+                </label>
+                <label className="radio-container">
+                  <input
+                    type="radio"
+                    name="clt_status"
+                    value="nao"
+                    checked={formData.cotista_fgts === false}
+                    onChange={handleRadioChange}
+                  />
+                  <span className="radio-label">não</span>
+                </label>
+              </div>
             </div>
           </div>
 
           <div className="form-row">
             {/* Email */}
             <div className="form-group">
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email">Seu email</label>
               <input
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="Seu email"
+                placeholder=""
                 required
+                className="simple-input"
               />
             </div>
 
@@ -214,37 +208,22 @@ function App() {
                 name="telefone"
                 value={formData.telefone}
                 onChange={handleChange}
-                placeholder="(00) 00000-0000"
+                placeholder=""
                 required
+                className="simple-input"
               />
             </div>
           </div>
 
-          {/* Concorda com os termos */}
-          <div className="form-group checkbox-group terms-group">
-            <label className="checkbox-container">
-              <input
-                type="checkbox"
-                id="concorda_termos"
-                name="concorda_termos"
-                checked={formData.concorda_termos}
-                onChange={handleChange}
-                required
-              />
-              <span className="checkmark"></span>
-              Concordo com os <a href="#">termos e condições</a>
-            </label>
-          </div>
-
-          <button type="submit" className="submit-button">
-            Simular Financiamento
+          <button type="submit" className="simulate-button">
+            Simular
           </button>
         </form>
 
         {/* Resultado da simulação */}
         {isSubmitted && (
           <div className="result-section">
-            <h2>Resumo da Simulação</h2>
+            <h2>Resultado da Simulação</h2>
             <div className="result-grid">
               <div className="result-item">
                 <span>Valor do Imóvel:</span>
@@ -256,7 +235,7 @@ function App() {
               </div>
               <div className="result-item">
                 <span>FGTS usado:</span>
-                <span>{formData.usar_fgts && formData.cotista_fgts ? 'Sim (R$ 20.000)' : 'Não'}</span>
+                <span>{formData.cotista_fgts ? 'Sim (R$ 20.000)' : 'Não'}</span>
               </div>
               <div className="result-item">
                 <span>Prazo:</span>
