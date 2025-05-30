@@ -139,20 +139,22 @@ function App() {
           </div>
 
           <div className="form-row">
-            {/* Prazo */}
             <div className="form-group">
-              <label htmlFor="prazo_meses">Prazo (meses)</label>
-              <input
-                type="number"
-                id="prazo_meses"
-                name="prazo_meses"
-                value={formData.prazo_meses}
+              <label htmlFor="renda_familiar">Renda Familiar Mensal</label>
+              <select
+                id="renda_familiar"
+                name="renda_familiar"
+                value={formData.renda_familiar}
                 onChange={handleChange}
-                placeholder=""
                 required
-                min="1"
                 className="simple-input"
-              />
+              >
+                <option value="">Selecione a renda</option>
+                <option value="até_2850">Até R$ 2.850,00</option>
+                <option value="2850_4700">R$ 2.850,01 a R$ 4.700,00</option>
+                <option value="4700_8000">R$ 4.700,01 a R$ 8.000,00</option>
+                <option value="8000_12000">R$ 8.000,01 a R$ 12.000,00</option>
+              </select>
             </div>
 
             {/* CLT Radio Buttons */}
@@ -183,7 +185,7 @@ function App() {
             </div>
           </div>
 
-          <div className="form-row">
+        <div className="form-row">
             {/* Email */}
             <div className="form-group">
               <label htmlFor="email">Seu email</label>
