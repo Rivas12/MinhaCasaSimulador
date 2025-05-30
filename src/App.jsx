@@ -157,7 +157,7 @@ function App() {
 
             {/* CLT Radio Buttons */}
             <div className="form-group">
-              <label>Você é CLT?</label>
+              <label>Regime de trabalho</label>
               <div className="radio-group">
                 <label className="radio-container">
                   <input
@@ -167,7 +167,7 @@ function App() {
                     checked={formData.cotista_fgts === true}
                     onChange={handleRadioChange}
                   />
-                  <span className="radio-label">Sim</span>
+                  <span className="radio-label">CLT</span>
                 </label>
                 <label className="radio-container">
                   <input
@@ -177,7 +177,7 @@ function App() {
                     checked={formData.cotista_fgts === false}
                     onChange={handleRadioChange}
                   />
-                  <span className="radio-label">não</span>
+                  <span className="radio-label">Autônomo</span>
                 </label>
               </div>
             </div>
