@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import { NumericFormat, PatternFormat } from 'react-number-format'
 
 function App() {
   const [formData, setFormData] = useState({
@@ -65,6 +66,14 @@ function App() {
     }).format(value || 0);
   };
 
+  const handleNumberFormatChange = (name, values) => {
+    const { floatValue } = values;
+    setFormData(prev => ({
+      ...prev,
+      [name]: floatValue || 0
+    }));
+  };
+
   return (
     <div className="simulator-container">
       <div className="simulator-card">
@@ -75,16 +84,17 @@ function App() {
             {/* Valor do imóvel */}
             <div className="form-group">
               <label htmlFor="valor_apartamento">Valor do Imóvel aproximado</label>
-              <input
-                type="number"
+              <NumericFormat
                 id="valor_apartamento"
-                name="valor_apartamento"
+                thousandSeparator="."
+                decimalSeparator=","
+                prefix="R$ "
+                decimalScale={2}
+                fixedDecimalScale
+                placeholder="R$ 0,00"
+                onValueChange={(values) => handleNumberFormatChange('valor_apartamento', values)}
                 value={formData.valor_apartamento}
-                onChange={handleChange}
-                placeholder=""
                 required
-                min="0"
-                step="0.01"
                 className="simple-input"
               />
             </div>
@@ -92,16 +102,17 @@ function App() {
             {/* Entrada */}
             <div className="form-group">
               <label htmlFor="entrada">Valor da Entrada</label>
-              <input
-                type="number"
+              <NumericFormat
                 id="entrada"
-                name="entrada"
+                thousandSeparator="."
+                decimalSeparator=","
+                prefix="R$ "
+                decimalScale={2}
+                fixedDecimalScale
+                placeholder="R$ 0,00"
+                onValueChange={(values) => handleNumberFormatChange('entrada', values)}
                 value={formData.entrada}
-                onChange={handleChange}
-                placeholder=""
                 required
-                min="0"
-                step="0.01"
                 className="simple-input"
               />
             </div>
@@ -175,15 +186,16 @@ function App() {
 
             <div className="form-group">
               <label htmlFor="saldo_fgts">Saldo FGTS</label>
-              <input
-                type="number"
+              <NumericFormat
                 id="saldo_fgts"
-                name="saldo_fgts"
+                thousandSeparator="."
+                decimalSeparator=","
+                prefix="R$ "
+                decimalScale={2}
+                fixedDecimalScale
+                placeholder="R$ 0,00"
+                onValueChange={(values) => handleNumberFormatChange('saldo_fgts', values)}
                 value={formData.saldo_fgts}
-                onChange={handleChange}
-                placeholder=""
-                min="0"
-                step="0.01"
                 className="simple-input"
               />
             </div>
@@ -293,13 +305,21 @@ function App() {
             {/* Telefone */}
             <div className="form-group">
               <label htmlFor="telefone">Telefone</label>
-              <input
-                type="tel"
+              <PatternFormat
+                format="(##) #####-####"
+                allowEmptyFormatting={false}
+                mask="_"
                 id="telefone"
                 name="telefone"
                 value={formData.telefone}
-                onChange={handleChange}
-                placeholder=""
+                onValueChange={(values) => {
+                  const { value } = values;
+                  setFormData(prev => ({
+                    ...prev,
+                    telefone: value
+                  }));
+                }}
+                placeholder="(00) 00000-0000"
                 required
                 className="simple-input"
               />
