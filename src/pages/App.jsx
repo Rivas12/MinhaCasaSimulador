@@ -14,7 +14,7 @@ function App() {
     taxa_juros_anual: '',
     prazo_anos: 10,
     email: '',
-    telefone: '',
+    celular: '',
     concorda_termos: false
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -23,11 +23,20 @@ function App() {
 
   // Função para validar o formulário
   const validateForm = () => {
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isEmailValid = emailRegex.test(formData.email);
+    
+    // Validate phone number has 11 digits (including area code)
+    // Remove non-digit characters before checking
+    const phoneDigits = formData.celular.replace(/\D/g, '');
+    const isPhoneValid = phoneDigits.length === 11;
+    
     const isValid = 
       formData.valor_apartamento && 
       formData.entrada && 
-      formData.email && 
-      formData.telefone && 
+      isEmailValid && 
+      isPhoneValid && 
       formData.concorda_termos;
     
     setIsFormValid(isValid);
@@ -331,27 +340,27 @@ function App() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                placeholder=""
+                placeholder="email@gmail.com"
                 required
                 className="simple-input"
               />
             </div>
 
-            {/* Telefone */}
+            {/* celular */}
             <div className="form-group">
-              <label htmlFor="telefone">Telefone</label>
+              <label htmlFor="celular">Celular</label>
               <PatternFormat
                 format="(##) #####-####"
                 allowEmptyFormatting={false}
                 mask="_"
-                id="telefone"
-                name="telefone"
-                value={formData.telefone}
+                id="celular"
+                name="celular"
+                value={formData.celular}
                 onValueChange={(values) => {
                   const { value } = values;
                   setFormData(prev => ({
                     ...prev,
-                    telefone: value
+                    celular: value
                   }));
                 }}
                 placeholder="(00) 00000-0000"
