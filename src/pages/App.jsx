@@ -338,7 +338,7 @@ function App() {
                 required
               />
               <span className="checkmark"></span>
-              <span className="checkbox-label">Concordo com os termos e condições</span>
+              <span className="checkbox-label">Concordo com os <a href="">termos e condições</a></span>
             </label>
           </div>
 
