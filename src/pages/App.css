@@ -404,3 +404,10 @@ input[type="checkbox"] {
 .checkbox-label {
   font-size: 0.9rem;
 }
+
+/* New rule for full-width simulate button in results section */
+.result-section .simulate-button {
+  width: 100%;
+  display: block;
+  margin-top: 1.5rem;
+}

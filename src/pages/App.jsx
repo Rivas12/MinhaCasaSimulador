@@ -413,6 +413,9 @@ function App() {
                 );
               })()}
             </div>
+            <button type="button" className="simulate-button" onClick={() => setIsSubmitted(false)}>
+              Editar
+            </button>
           </div>
         )}
       </div>
