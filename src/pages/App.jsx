@@ -12,7 +12,7 @@ function App() {
     possui_dependentes: true, 
     possui_saldo_fgts: true,
     saldo_fgts: 0,
-    taxa_juros_anual: '',
+    taxa_juros_anual: '4,25%',
     prazo_anos: 10,
     email: '',
     celular: '',
@@ -282,7 +282,7 @@ function App() {
                 value={formData.taxa_juros_anual}
                 onChange={handleChange}
                 placeholder=""
-                className="simple-input"
+                className="simple-input disabled-input"
                 disabled
               />
             </div>

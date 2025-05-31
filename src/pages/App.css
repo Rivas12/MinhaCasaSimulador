@@ -417,3 +417,11 @@ input[type="checkbox"] {
   display: block;
   margin-top: 1.5rem;
 }
+
+.disabled-input {
+  background-color: #f2f2f2;
+  color: #888;
+  cursor: not-allowed;
+  border: 1px solid #ddd;
+  opacity: 0.7;
+}
