@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import './App.css'
 import { NumericFormat, PatternFormat } from 'react-number-format'
 import { supabase } from '../utils/supabaseClient'
 
 function App() {
+  const navigate = useNavigate();
+  
   const [formData, setFormData] = useState({
     valor_apartamento: '',
     entrada: '',
@@ -459,7 +462,9 @@ function App() {
                 required
               />
               <span className="checkmark"></span>
-              <span className="checkbox-label">Concordo com os <a href="">termos e condições</a></span>
+              <span className="checkbox-label">
+                Concordo com os <a href="#" onClick={(e) => { e.preventDefault(); navigate('/termos'); }}>termos e condições</a>
+              </span>
             </label>
           </div>
 
