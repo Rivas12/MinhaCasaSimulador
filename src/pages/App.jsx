@@ -6,7 +6,9 @@ function App() {
     valor_apartamento: '',
     entrada: '',
     renda_familiar: '',
-    cotista_fgts: false, // For CLT option
+    cotista_fgts: false,
+    possui_dependentes: false,
+    possui_saldo_fgts: false,
     taxa_juros_anual: '',
     prazo_meses: '',
     email: '',
@@ -25,9 +27,10 @@ function App() {
   };
 
   const handleRadioChange = (e) => {
+    const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      cotista_fgts: e.target.value === 'sim'
+      [name]: value === 'sim'
     }));
   };
 
@@ -169,33 +172,91 @@ function App() {
               />
             </div>
 
-            {/* CLT Radio Buttons */}
-            <div className="form-group">
-              <label>Regime de trabalho</label>
-              <div className="radio-group">
-                <label className="radio-container">
-                  <input
-                    type="radio"
-                    name="clt_status"
-                    value="sim"
-                    checked={formData.cotista_fgts === true}
-                    onChange={handleRadioChange}
-                  />
-                  <span className="radio-label">CLT</span>
-                </label>
-                <label className="radio-container">
-                  <input
-                    type="radio"
-                    name="clt_status"
-                    value="nao"
-                    checked={formData.cotista_fgts === false}
-                    onChange={handleRadioChange}
-                  />
-                  <span className="radio-label">Autônomo</span>
-                </label>
-              </div>
+          </div>
+
+        <div className="form-row">
+          {/* Regime de trabalho Radio Buttons */}
+          <div className="form-group">
+            <label>Regime de trabalho</label>
+            <div className="radio-group">
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="cotista_fgts"
+                  value="sim"
+                  checked={formData.cotista_fgts === true}
+                  onChange={handleRadioChange}
+                />
+                <span className="radio-label">CLT</span>
+              </label>
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="cotista_fgts"
+                  value="nao"
+                  checked={formData.cotista_fgts === false}
+                  onChange={handleRadioChange}
+                />
+                <span className="radio-label">Autônomo</span>
+              </label>
             </div>
           </div>
+          
+          {/* Dependentes Radio Buttons */}
+          <div className="form-group">
+            <label>Possui dependentes?</label>
+            <div className="radio-group">
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="possui_dependentes"
+                  value="sim"
+                  checked={formData.possui_dependentes === true}
+                  onChange={handleRadioChange}
+                />
+                <span className="radio-label">Sim</span>
+              </label>
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="possui_dependentes"
+                  value="nao"
+                  checked={formData.possui_dependentes === false}
+                  onChange={handleRadioChange}
+                />
+                <span className="radio-label">Não</span>
+              </label>
+            </div>
+          </div>
+
+          {/* Saldo FGTS Radio Buttons */}
+          <div className="form-group">
+            <label>Possui saldo no FGTS?</label>
+            <div className="radio-group">
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="possui_saldo_fgts"
+                  value="sim"
+                  checked={formData.possui_saldo_fgts === true}
+                  onChange={handleRadioChange}
+                />
+                <span className="radio-label">Sim</span>
+              </label>
+              <label className="radio-container">
+                <input
+                  type="radio"
+                  name="possui_saldo_fgts"
+                  value="nao"
+                  checked={formData.possui_saldo_fgts === false}
+                  onChange={handleRadioChange}
+                />
+                <span className="radio-label">Não</span>
+              </label>
+            </div>
+          </div>
+
+        </div>
 
         <div className="form-row">
             {/* Email */}
