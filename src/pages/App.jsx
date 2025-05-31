@@ -114,7 +114,7 @@ function App() {
 
         {!isSubmitted ? (
           // Form section - only shown when not submitted
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="form-section">
           <div className="form-row">
             {/* Valor do imóvel */}
             <div className="form-group">

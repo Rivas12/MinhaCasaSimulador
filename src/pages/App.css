@@ -405,6 +405,12 @@ input[type="checkbox"] {
   font-size: 0.9rem;
 }
 
+/* Add this after the .checkbox-label rule and before the .result-section .simulate-button rule */
+
+.form-section {
+  animation: fadeIn 0.5s ease-out;
+}
+
 /* New rule for full-width simulate button in results section */
 .result-section .simulate-button {
   width: 100%;
