@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import { NumericFormat, PatternFormat } from 'react-number-format'
 
@@ -19,22 +19,24 @@ function App() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [parcelaMensal, setParcelaMensal] = useState(0);
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }));
+  // Função para validar o formulário
+  const validateForm = () => {
+    const isValid = 
+      formData.valor_apartamento && 
+      formData.entrada && 
+      formData.email && 
+      formData.telefone && 
+      formData.concorda_termos;
+    
+    setIsFormValid(isValid);
   };
 
-  const handleRadioChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value === 'sim'
-    }));
-  };
+  // Verificar a validade do formulário sempre que os dados mudarem
+  useEffect(() => {
+    validateForm();
+  }, [formData]);
 
   const calcularParcela = () => {
     const valorImovel = parseFloat(formData.valor_apartamento || 0);
@@ -86,6 +88,22 @@ function App() {
     setFormData(prev => ({
       ...prev,
       [name]: floatValue || 0
+    }));
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleRadioChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value === 'sim'
     }));
   };
 
@@ -359,7 +377,15 @@ function App() {
             </label>
           </div>
 
-          <button type="submit" className="simulate-button">
+          <button 
+            type="submit" 
+            className="simulate-button"
+            disabled={!isFormValid}
+            style={{ 
+              opacity: isFormValid ? 1 : 0.5,
+              cursor: isFormValid ? 'pointer' : 'not-allowed' 
+            }}
+          >
             Simular
           </button>
         </form>
