@@ -7,15 +7,18 @@ function App() {
     valor_apartamento: '',
     entrada: '',
     renda_familiar: 'até_2850',
-    cotista_fgts: true, // Changed to true for CLT as default
-    possui_dependentes: true, // Changed to true for Sim as default
-    possui_saldo_fgts: true, // Changed to true for Sim as default
+    cotista_fgts: true,
+    possui_dependentes: true, 
+    possui_saldo_fgts: true,
     saldo_fgts: 0,
     taxa_juros_anual: '',
     prazo_anos: 10,
     email: '',
     celular: '',
-    concorda_termos: false
+    concorda_termos: false,
+    ip: '',
+    cidade: '',
+    estado: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [parcelaMensal, setParcelaMensal] = useState(0);
@@ -46,6 +49,28 @@ function App() {
   useEffect(() => {
     validateForm();
   }, [formData]);
+
+  // Get IP address and location on component mount
+  useEffect(() => {
+    const getIpAndLocation = async () => {
+      try {
+        // Using ip-api.com which provides geolocation data including city and state
+        const response = await fetch('https://ipapi.co/json/');
+        const data = await response.json();
+        
+        setFormData(prev => ({
+          ...prev,
+          ip: data.ip,
+          cidade: data.city || '',
+          estado: data.region || ''
+        }));
+      } catch (error) {
+        console.error("Couldn't fetch IP or location data:", error);
+      }
+    };
+    
+    getIpAndLocation();
+  }, []);
 
   const calcularParcela = () => {
     const valorImovel = parseFloat(formData.valor_apartamento || 0);
@@ -83,8 +108,35 @@ function App() {
     const parcela = calcularParcela();
     setParcelaMensal(parcela);
     setIsSubmitted(true);
+    
+    // Calculate value being financed
+    const valorFinanciado = formData.valor_apartamento - formData.entrada - 
+      (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0);
+    
+    // Print form data to console with IP address and location
+    console.log("Dados da simulação:", {
+      nome: "", // This field isn't collected in the form but is in the DB schema
+      email: formData.email,
+      celular: formData.celular,
+      ip: formData.ip,
+      cidade: formData.cidade,
+      estado: formData.estado,
+      valor_imovel: formData.valor_apartamento,
+      valor_entrada: formData.entrada,
+      renda_familiar: formData.renda_familiar,
+      prazo_anos: formData.prazo_anos,
+      saldo_fgts: formData.saldo_fgts,
+      regime_de_trabalho: formData.cotista_fgts ? "CLT" : "Autônomo",
+      possui_fgts: formData.possui_saldo_fgts,
+      possui_dependentes: formData.possui_dependentes,
+      concorda_termos: formData.concorda_termos,
+      created_at: new Date().toISOString(),
+      // Additional calculated fields
+      parcela_mensal: parcela,
+      valor_financiado: valorFinanciado
+    });
   };
-
+  
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
