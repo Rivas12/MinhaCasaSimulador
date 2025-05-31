@@ -25,16 +25,24 @@ function Termos() {
             <p>Os valores, taxas e condições apresentados são aproximados e podem variar de acordo com a análise de crédito, políticas vigentes da Caixa Econômica Federal e outros fatores individuais não contemplados nesta simulação.</p>
           </section>
 
-          <section>
-            <h2>4. Uso de Dados Pessoais</h2>
-            <p>Ao utilizar nosso simulador, você concorda com a coleta e processamento dos dados fornecidos para fins de:</p>
-            <ul>
-              <li>Realizar a simulação solicitada</li>
-              <li>Entrar em contato para oferecer serviços relacionados</li>
-              <li>Melhorar nossos produtos e serviços</li>
-              <li>Cumprir obrigações legais</li>
-            </ul>
-            <p>Seus dados serão armazenados de forma segura e não serão compartilhados com terceiros sem seu consentimento, exceto quando exigido por lei.</p>
+          <section className="data-usage-section">
+            <h2 className="section-title">4. Uso de Dados Pessoais</h2>
+            
+            <div className="data-usage-content">
+              <p className="important-notice">Ao utilizar nosso simulador, você concorda com a coleta e processamento dos dados fornecidos para fins de:</p>
+              
+                <span className="highlight">1. Realizar a simulação solicitada</span><br />
+                <span className="highlight">2. Compartilhamento com imobiliárias e corretores parceiros</span> que possam oferecer imóveis adequados ao seu perfil<br />
+                3. Análise de mercado e <span className="highlight">geração de leads qualificados</span> para o setor imobiliário<br />
+                4. Melhorar nossos produtos e serviços<br />
+                5. Cumprir obrigações legais<br /><br />
+              
+              <div className="data-sharing-notice">
+                <p>Seus dados serão compartilhados com nossos parceiros comerciais do setor imobiliário para que possam entrar em contato e apresentar ofertas personalizadas. <strong>Ao utilizar este simulador, você autoriza expressamente este compartilhamento.</strong></p>
+              </div>
+              
+              <p className="partner-commitment">Trabalhamos apenas com parceiros comprometidos com a proteção de dados e boas práticas comerciais.</p>
+            </div>
           </section>
 
           <section>
