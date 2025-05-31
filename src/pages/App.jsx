@@ -7,10 +7,10 @@ function App() {
     valor_apartamento: '',
     entrada: '',
     renda_familiar: '',
-    cotista_fgts: false,
-    possui_dependentes: false,
-    possui_saldo_fgts: false,
-    saldo_fgts: 0, // Add this new property
+    cotista_fgts: true, // Changed to true for CLT as default
+    possui_dependentes: true, // Changed to true for Sim as default
+    possui_saldo_fgts: true, // Changed to true for Sim as default
+    saldo_fgts: 0,
     taxa_juros_anual: '',
     prazo_anos: 10,
     email: '',
