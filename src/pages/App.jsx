@@ -39,16 +39,31 @@ function App() {
   const calcularParcela = () => {
     const valorImovel = parseFloat(formData.valor_apartamento || 0);
     const entrada = parseFloat(formData.entrada || 0);
-    const fgtsUsado = formData.cotista_fgts ? 20000 : 0; // Simplified for CLT
+    
+    // Use actual FGTS balance if applicable
+    const fgtsUsado = (formData.cotista_fgts && formData.possui_saldo_fgts) 
+      ? parseFloat(formData.saldo_fgts || 0) 
+      : 0;
+      
     const valorFinanciado = valorImovel - entrada - fgtsUsado;
 
-    const prazo = parseInt(formData.prazo_anos || 0);
-    const taxaAnual = parseFloat(formData.taxa_juros_anual || 9);
+    // Convert years to months for the calculation
+    const prazoMeses = parseInt(formData.prazo_anos || 0) * 12;
+    
+    // Parse the interest rate correctly
+    let taxaAnual;
+    if (typeof formData.taxa_juros_anual === 'string' && formData.taxa_juros_anual.includes('%')) {
+      taxaAnual = parseFloat(formData.taxa_juros_anual.replace('%', ''));
+    } else {
+      taxaAnual = parseFloat(formData.taxa_juros_anual || 9);
+    }
+    
     const taxaMensal = taxaAnual / 100 / 12;
 
-    if (valorFinanciado <= 0 || prazo <= 0 || taxaMensal <= 0) return 0;
+    if (valorFinanciado <= 0 || prazoMeses <= 0 || taxaMensal <= 0) return 0;
 
-    const parcela = valorFinanciado * taxaMensal / (1 - Math.pow(1 + taxaMensal, -prazo));
+    // Use prazoMeses instead of prazo in the calculation
+    const parcela = valorFinanciado * taxaMensal / (1 - Math.pow(1 + taxaMensal, -prazoMeses));
     return parcela;
   };
 
@@ -362,49 +377,41 @@ function App() {
               </div>
               <div className="result-item">
                 <span>FGTS usado:</span>
-                <span>{formData.cotista_fgts && formData.possui_saldo_fgts ? formatCurrency(formData.saldo_fgts) : 'R$0,00'}</span>
+                <span>{formData.possui_saldo_fgts ? formatCurrency(formData.saldo_fgts) : 'R$0,00'}</span>
               </div>
-              <div className="result-item">
-                <span>Valor Financiado:</span>
-                <span>{formatCurrency(formData.valor_apartamento - formData.entrada - (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0))}</span>
-              </div>
-              <div className="result-item">
-                <span>Renda Familiar:</span>
-                <span>{ 
-                  formData.renda_familiar === 'até_2850' ? 'Até R$2.850,00' :
-                  formData.renda_familiar === '2850_4700' ? 'R$2.850,01 a R$4.700,00' :
-                  formData.renda_familiar === '4700_8000' ? 'R$4.700,01 a R$8.000,00' :
-                  formData.renda_familiar === '8000_12000' ? 'R$8.000,01 a R$12.000,00' : ''
-                }</span>
-              </div>
-              <div className="result-item">
-                <span>Regime de Trabalho:</span>
-                <span>{formData.cotista_fgts ? 'CLT' : 'Autônomo'}</span>
-              </div>
-              <div className="result-item">
-                <span>Possui Dependentes:</span>
-                <span>{formData.possui_dependentes ? 'Sim' : 'Não'}</span>
-              </div>
-              <div className="result-item">
-                <span>Prazo:</span>
-                <span>{formData.prazo_anos} anos</span>
-              </div>
-              <div className="result-item">
-                <span>Taxa de Juros:</span>
-                <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual}` : '9% a.a. (padrão)'}</span>
-              </div>
-              <div className="result-item">
-                <span>Parcela estimada:</span>
-                <span>{formatCurrency(parcelaMensal)}</span>
-              </div>
-              <div className="result-item">
-                <span>Total a pagar:</span>
-                <span>{formatCurrency(parcelaMensal * formData.prazo_anos * 12)}</span>
-              </div>
-              <div className="result-item">
-                <span>Custo total do financiamento:</span>
-                <span>{formatCurrency((parcelaMensal * formData.prazo_anos * 12) - (formData.valor_apartamento - formData.entrada - (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0)))}</span>
-              </div>
+              {/* Calculate valor financiado properly */}
+              {(() => {
+                const valorFinanciado = formData.valor_apartamento - formData.entrada - 
+                  (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0);
+                return (
+                  <>
+                    <div className="result-item">
+                      <span>Valor Financiado:</span>
+                      <span>{formatCurrency(valorFinanciado)}</span>
+                    </div>
+                    <div className="result-item">
+                      <span>Prazo:</span>
+                      <span>{formData.prazo_anos} anos ({formData.prazo_anos * 12} meses)</span>
+                    </div>
+                    <div className="result-item">
+                      <span>Taxa de Juros anual:</span>
+                      <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual}` : '9% a.a. (padrão)'}</span>
+                    </div>
+                    <div className="result-item">
+                      <span>Parcela estimada:</span>
+                      <span>{formatCurrency(parcelaMensal)}</span>
+                    </div>
+                    <div className="result-item">
+                      <span>Total de juros:</span>
+                      <span>{formatCurrency((parcelaMensal * formData.prazo_anos * 12) - valorFinanciado)}</span>
+                    </div>
+                    <div className="result-item">
+                      <span>Total a pagar:</span>
+                      <span>{formatCurrency(parcelaMensal * (formData.prazo_anos * 12))}</span>
+                    </div>
+                  </>
+                );
+              })()}
             </div>
           </div>
         )}
