@@ -9,6 +9,7 @@ function App() {
     cotista_fgts: false,
     possui_dependentes: false,
     possui_saldo_fgts: false,
+    saldo_fgts: '', // Add this new property
     taxa_juros_anual: '',
     prazo_anos: '',
     email: '',
@@ -168,6 +169,21 @@ function App() {
                 min="0"
                 max="420"
                 step="1"
+                className="simple-input"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="saldo_fgts">Saldo FGTS</label>
+              <input
+                type="number"
+                id="saldo_fgts"
+                name="saldo_fgts"
+                value={formData.saldo_fgts}
+                onChange={handleChange}
+                placeholder=""
+                min="0"
+                step="0.01"
                 className="simple-input"
               />
             </div>
