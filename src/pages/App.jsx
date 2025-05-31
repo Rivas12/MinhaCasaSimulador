@@ -10,7 +10,7 @@ function App() {
     possui_dependentes: false,
     possui_saldo_fgts: false,
     taxa_juros_anual: '',
-    prazo_meses: '',
+    prazo_anos: '',
     email: '',
     telefone: '',
     concorda_termos: false
@@ -40,7 +40,7 @@ function App() {
     const fgtsUsado = formData.cotista_fgts ? 20000 : 0; // Simplified for CLT
     const valorFinanciado = valorImovel - entrada - fgtsUsado;
 
-    const prazo = parseInt(formData.prazo_meses || 0);
+    const prazo = parseInt(formData.prazo_anos || 0);
     const taxaAnual = parseFloat(formData.taxa_juros_anual || 9);
     const taxaMensal = taxaAnual / 100 / 12;
 
@@ -157,12 +157,12 @@ function App() {
 
           <div className="form-row">
             <div className="form-group">
-              <label htmlFor="prazo_meses">Prazo (Meses)</label>
+              <label htmlFor="prazo_anos">Prazo (Anos)</label>
               <input
                 type="number"
-                id="prazo_meses"
-                name="prazo_meses"
-                value={formData.prazo_meses}
+                id="prazo_anos"
+                name="prazo_anos"
+                value={formData.prazo_anos}
                 onChange={handleChange}
                 placeholder=""
                 min="0"
@@ -314,7 +314,7 @@ function App() {
               </div>
               <div className="result-item">
                 <span>Prazo:</span>
-                <span>{formData.prazo_meses} meses</span>
+                <span>{formData.prazo_anos} meses</span>
               </div>
               <div className="result-item">
                 <span>Taxa de Juros:</span>
