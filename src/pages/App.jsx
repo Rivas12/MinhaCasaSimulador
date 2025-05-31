@@ -94,7 +94,9 @@ function App() {
       <div className="simulator-card">
         <h1 className="handwritten-title">Simulador minha casa minha vida</h1>
 
-        <form onSubmit={handleSubmit}>
+        {!isSubmitted ? (
+          // Form section - only shown when not submitted
+          <form onSubmit={handleSubmit}>
           <div className="form-row">
             {/* Valor do imóvel */}
             <div className="form-group">
@@ -361,62 +363,61 @@ function App() {
             Simular
           </button>
         </form>
-
-        {/* Resultado da simulação */}
-        {isSubmitted && (
+        ) : (
+          // Result section - only shown when submitted
           <div className="result-section">
-            <h2>Resultado da Simulação</h2>
-            <div className="result-grid">
-              <div className="result-item">
-                <span>Valor do Imóvel:</span>
-                <span>{formatCurrency(formData.valor_apartamento)}</span>
-              </div>
-              <div className="result-item">
-                <span>Entrada:</span>
-                <span>{formatCurrency(formData.entrada)}</span>
-              </div>
-              <div className="result-item">
-                <span>FGTS usado:</span>
-                <span>{formData.possui_saldo_fgts ? formatCurrency(formData.saldo_fgts) : 'R$0,00'}</span>
-              </div>
-              {/* Calculate valor financiado properly */}
-              {(() => {
-                const valorFinanciado = formData.valor_apartamento - formData.entrada - 
-                  (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0);
-                return (
-                  <>
-                    <div className="result-item">
-                      <span>Valor Financiado:</span>
-                      <span>{formatCurrency(valorFinanciado)}</span>
-                    </div>
-                    <div className="result-item">
-                      <span>Prazo:</span>
-                      <span>{formData.prazo_anos} anos ({formData.prazo_anos * 12} meses)</span>
-                    </div>
-                    <div className="result-item">
-                      <span>Taxa de Juros anual:</span>
-                      <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual}` : '9% a.a. (padrão)'}</span>
-                    </div>
-                    <div className="result-item">
-                      <span>Parcela estimada:</span>
-                      <span>{formatCurrency(parcelaMensal)}</span>
-                    </div>
-                    <div className="result-item">
-                      <span>Total de juros:</span>
-                      <span>{formatCurrency((parcelaMensal * formData.prazo_anos * 12) - valorFinanciado)}</span>
-                    </div>
-                    <div className="result-item">
-                      <span>Total a pagar:</span>
-                      <span>{formatCurrency(parcelaMensal * (formData.prazo_anos * 12))}</span>
-                    </div>
-                  </>
-                );
-              })()}
+          <h2>Resultado da Simulação</h2>
+          <div className="result-grid">
+            <div className="result-item">
+              <span>Valor do Imóvel:</span>
+              <span>{formatCurrency(formData.valor_apartamento)}</span>
             </div>
-            <button type="button" className="simulate-button" onClick={() => setIsSubmitted(false)}>
-              Editar
-            </button>
+            <div className="result-item">
+              <span>Entrada:</span>
+              <span>{formatCurrency(formData.entrada)}</span>
+            </div>
+            <div className="result-item">
+              <span>FGTS usado:</span>
+              <span>{formData.possui_saldo_fgts ? formatCurrency(formData.saldo_fgts) : 'R$0,00'}</span>
+            </div>
+            {/* Calculate valor financiado properly */}
+            {(() => {
+              const valorFinanciado = formData.valor_apartamento - formData.entrada - 
+                (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0);
+              return (
+                <>
+                  <div className="result-item">
+                    <span>Valor Financiado:</span>
+                    <span>{formatCurrency(valorFinanciado)}</span>
+                  </div>
+                  <div className="result-item">
+                    <span>Prazo:</span>
+                    <span>{formData.prazo_anos} anos ({formData.prazo_anos * 12} meses)</span>
+                  </div>
+                  <div className="result-item">
+                    <span>Taxa de Juros anual:</span>
+                    <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual}` : '9% a.a. (padrão)'}</span>
+                  </div>
+                  <div className="result-item">
+                    <span>Parcela estimada:</span>
+                    <span>{formatCurrency(parcelaMensal)}</span>
+                  </div>
+                  <div className="result-item">
+                    <span>Total de juros:</span>
+                    <span>{formatCurrency((parcelaMensal * formData.prazo_anos * 12) - valorFinanciado)}</span>
+                  </div>
+                  <div className="result-item">
+                    <span>Total a pagar:</span>
+                    <span>{formatCurrency(parcelaMensal * (formData.prazo_anos * 12))}</span>
+                  </div>
+                </>
+              );
+            })()}
           </div>
+          <button type="button" className="simulate-button" onClick={() => setIsSubmitted(false)}>
+            Editar
+          </button>
+        </div>
         )}
       </div>
     </div>
