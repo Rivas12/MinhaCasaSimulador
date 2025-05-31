@@ -117,7 +117,7 @@ function App() {
                 value={formData.renda_familiar}
                 onChange={(e) => {
                   const value = e.target.value;
-                  let taxa = '';
+                  let taxa = '4.25%';
 
                   if (value === 'até_2850') taxa = "4.25%";
                   else if (value === '2850_4700') taxa = "4.5%";
@@ -264,7 +264,7 @@ function App() {
                   type="radio"
                   name="possui_saldo_fgts"
                   value="nao"
-                  checked={formData.possui_saldo_fgts === false}
+                  checked={formData.possui_saldo_fgts}
                   onChange={handleRadioChange}
                 />
                 <span className="radio-label">Não</span>
@@ -330,11 +330,11 @@ function App() {
               </div>
               <div className="result-item">
                 <span>Prazo:</span>
-                <span>{formData.prazo_anos} meses</span>
+                <span>{formData.prazo_anos} anos</span>
               </div>
               <div className="result-item">
                 <span>Taxa de Juros:</span>
-                <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual}% a.a.` : '9% a.a. (padrão)'}</span>
+                <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual} a.a.` : '9% a.a. (padrão)'}</span>
               </div>
               <div className="result-item">
                 <span>Parcela estimada:</span>
