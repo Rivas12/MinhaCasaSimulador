@@ -326,6 +326,22 @@ function App() {
             </div>
           </div>
 
+          {/* Terms agreement checkbox */}
+          <div className="form-group terms-checkbox">
+            <label className="checkbox-container">
+              <input
+                type="checkbox"
+                id="concorda_termos"
+                name="concorda_termos"
+                checked={formData.concorda_termos}
+                onChange={handleChange}
+                required
+              />
+              <span className="checkmark"></span>
+              <span className="checkbox-label">Concordo com os termos e condições</span>
+            </label>
+          </div>
+
           <button type="submit" className="simulate-button">
             Simular
           </button>

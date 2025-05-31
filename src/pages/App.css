@@ -98,12 +98,12 @@ h1 {
 form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.25rem; /* Reduced from 2rem */
 }
 
 .form-row {
   display: flex;
-  gap: 2rem;
+  gap: 1.25rem; /* Reduced from 2rem */
 }
 
 .form-group {
@@ -364,18 +364,18 @@ input[type="checkbox"] {
   gap: 10px;
   cursor: pointer;
   position: relative;
-  padding: 8px 0;
+  padding: 4px 0;
 }
 
 .checkbox-container .checkmark {
-  width: 22px;
-  height: 22px;
+  position: relative;
+  min-width: 20px;
+  height: 20px;
   background: white;
   border: 1px solid var(--border);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-radius: 4px;
+  margin-right: 10px;
+  display: inline-block;
   transition: all 0.2s;
 }
 
@@ -386,15 +386,21 @@ input[type="checkbox"] {
 
 .checkbox-container .checkmark:after {
   content: '';
-  width: 6px;
-  height: 12px;
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
   display: none;
-  position: absolute;
 }
 
 .checkbox-container input:checked ~ .checkmark:after {
   display: block;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
 }
