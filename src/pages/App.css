@@ -141,7 +141,7 @@ label {
   box-shadow: 0 0 0 3px var(--focus-shadow);
 }
 
-/* Radio button styling */
+/* Radio button styling - slimmer version */
 .radio-group {
   display: flex;
   gap: 1.25rem;
@@ -153,7 +153,7 @@ label {
   gap: 0.5rem;
   cursor: pointer;
   position: relative;
-  padding: 0.75rem 1.25rem;
+  padding: 0.5rem 1rem; /* Reduced padding to make buttons less fat */
   background-color: #f9f9f9;
   border-radius: 25px;
   transition: all 0.2s ease;
@@ -174,15 +174,38 @@ input[type="radio"]:checked + .radio-label {
   font-weight: 600;
 }
 
+/* Border styling when selected, made more subtle */
+input[type="radio"]:checked ~ .checkmark,
+.radio-container:has(input[type="radio"]:checked) {
+  border: 2px solid var(--primary);
+  background-color: rgba(58, 86, 212, 0.05);
+  box-shadow: 0 0 0 1px var(--primary-light);
+}
+
+.radio-label {
+  font-weight: 500;
+  font-size: 0.95rem; /* Slightly smaller text */
+  transition: all 0.2s ease;
+}
+
+/* Remove the underline styling and replace with border highlight */
 .radio-container input[type="radio"]:checked ~ .radio-label::before {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background-color: var(--primary);
-  border-radius: 2px;
+  display: none;
+}
+
+/* Add this new rule for the border highlight */
+.radio-container input[type="radio"]:checked ~ .radio-container,
+input[type="radio"]:checked + .radio-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* Add border styling to the parent container when selected */
+input[type="radio"]:checked ~ .checkmark,
+.radio-container:has(input[type="radio"]:checked) {
+  border: 2px solid var(--primary);
+  background-color: rgba(58, 86, 212, 0.05);
+  box-shadow: 0 0 0 1px var(--primary-light);
 }
 
 .radio-label {

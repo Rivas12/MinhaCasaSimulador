@@ -9,9 +9,9 @@ function App() {
     cotista_fgts: false,
     possui_dependentes: false,
     possui_saldo_fgts: false,
-    saldo_fgts: '', // Add this new property
+    saldo_fgts: 0, // Add this new property
     taxa_juros_anual: '',
-    prazo_anos: '',
+    prazo_anos: 10,
     email: '',
     telefone: '',
     concorda_termos: false
@@ -166,7 +166,7 @@ function App() {
                 value={formData.prazo_anos}
                 onChange={handleChange}
                 placeholder=""
-                min="0"
+                min="10"
                 max="420"
                 step="1"
                 className="simple-input"
