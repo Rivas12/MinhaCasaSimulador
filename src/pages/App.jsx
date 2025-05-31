@@ -107,45 +107,25 @@ function App() {
             {/* Renda familiar */}
             <div className="form-group">
               <label htmlFor="renda_familiar">Renda Familiar Mensal</label>
-              <input
-                type="number"
-                id="renda_familiar"
-                name="renda_familiar"
-                value={formData.renda_familiar}
-                onChange={handleChange}
-                placeholder=""
-                required
-                min="0"
-                step="0.01"
-                className="simple-input"
-              />
-            </div>
-
-            {/* Taxa de juros */}
-            <div className="form-group">
-              <label htmlFor="taxa_juros_anual">Taxa de juros</label>
-              <input
-                type="number"
-                id="taxa_juros_anual"
-                name="taxa_juros_anual"
-                value={formData.taxa_juros_anual}
-                onChange={handleChange}
-                placeholder=""
-                min="0"
-                step="0.01"
-                className="simple-input"
-              />
-            </div>
-          </div>
-
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="renda_familiar">Renda Familiar Mensal</label>
               <select
                 id="renda_familiar"
                 name="renda_familiar"
                 value={formData.renda_familiar}
-                onChange={handleChange}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  let taxa = '';
+
+                  if (value === 'até_2850') taxa = 4.25;
+                  else if (value === '2850_4700') taxa = 4.5;
+                  else if (value === '4700_8000') taxa = 5.5;
+                  else if (value === '8000_12000') taxa = 7.16;
+
+                  setFormData({
+                    ...formData,
+                    renda_familiar: value,
+                    taxa_juros: taxa,
+                  });
+                }}
                 required
                 className="simple-input"
               >
@@ -155,6 +135,40 @@ function App() {
                 <option value="4700_8000">R$ 4.700,01 a R$ 8.000,00</option>
                 <option value="8000_12000">R$ 8.000,01 a R$ 12.000,00</option>
               </select>
+            </div>
+
+            {/* Taxa de juros */}
+            <div className="form-group">
+              <label htmlFor="prazo_meses">Taxa de juros</label>
+              <input
+                type="number"
+                id="prazo_meses"
+                name="prazo_meses"
+                value={formData.prazo_meses}
+                onChange={handleChange}
+                placeholder=""
+                min="0"
+                max="420"
+                className="simple-input"
+              />
+            </div>
+          </div>
+
+          <div className="form-row">
+
+            <div className="form-group">
+              <label htmlFor="taxa_juros_anual">Prazo (Meses)</label>
+              <input
+                type="number"
+                id="taxa_juros_anual"
+                name="taxa_juros_anual"
+                value={formData.taxa_juros_anual}
+                onChange={handleChange}
+                placeholder=""
+                min="0"
+                step="1"
+                className="simple-input"
+              />
             </div>
 
             {/* CLT Radio Buttons */}
