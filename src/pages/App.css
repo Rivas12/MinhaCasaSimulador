@@ -36,7 +36,24 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 2rem;
+  background-image: url('../images/background_image.webp'); /* Replace with your background image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  position: relative;
+}
+
+/* Add an overlay to ensure text remains readable */
+.simulator-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.1); /* Dark overlay for better contrast */
+  z-index: 0;
 }
 
 .simulator-card {
@@ -47,6 +64,9 @@ body {
   width: 100%;
   max-width: 750px;
   animation: fadeIn 0.5s ease-out;
+  position: relative;
+  z-index: 1; /* Ensure the card appears above the overlay */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Add shadow for better separation from background */
 }
 
 @keyframes fadeIn {
@@ -342,9 +362,6 @@ label {
     font-size: 1.5rem;
   }
 }
-
-/* Add Inter font from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 select.simple-input {
   appearance: none;
