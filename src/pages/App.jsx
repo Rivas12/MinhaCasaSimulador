@@ -362,7 +362,7 @@ function App() {
               </div>
               <div className="result-item">
                 <span>FGTS usado:</span>
-                <span>{formData.cotista_fgts ? 'Sim (R$ 20.000)' : 'Não'}</span>
+                <span>{formData.cotista_fgts ? `${formatCurrency(formData.saldo_fgts)}` : 'R$0.00'}</span>
               </div>
               <div className="result-item">
                 <span>Prazo:</span>
