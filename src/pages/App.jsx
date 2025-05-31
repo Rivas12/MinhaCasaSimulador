@@ -114,8 +114,7 @@ function App() {
       (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0);
     
     // Print form data to console with IP address and location
-    console.log("Dados da simulação:", {
-      nome: "", // This field isn't collected in the form but is in the DB schema
+    console.log({
       email: formData.email,
       celular: formData.celular,
       ip: formData.ip,
@@ -131,9 +130,6 @@ function App() {
       possui_dependentes: formData.possui_dependentes,
       concorda_termos: formData.concorda_termos,
       created_at: new Date().toISOString(),
-      // Additional calculated fields
-      parcela_mensal: parcela,
-      valor_financiado: valorFinanciado
     });
   };
   
