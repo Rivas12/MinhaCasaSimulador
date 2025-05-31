@@ -395,7 +395,7 @@ function App() {
               cursor: isFormValid ? 'pointer' : 'not-allowed' 
             }}
           >
-            Simular
+            Quero minha simulação
           </button>
         </form>
         ) : (
