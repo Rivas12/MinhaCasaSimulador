@@ -276,7 +276,7 @@ function App() {
                   type="radio"
                   name="possui_saldo_fgts"
                   value="nao"
-                  checked={formData.possui_saldo_fgts}
+                  checked={formData.possui_saldo_fgts === false} // Fixed this line
                   onChange={handleRadioChange}
                 />
                 <span className="radio-label">Não</span>
