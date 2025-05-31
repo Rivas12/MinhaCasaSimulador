@@ -6,7 +6,7 @@ function App() {
   const [formData, setFormData] = useState({
     valor_apartamento: '',
     entrada: '',
-    renda_familiar: '',
+    renda_familiar: 'até_2850',
     cotista_fgts: true, // Changed to true for CLT as default
     possui_dependentes: true, // Changed to true for Sim as default
     possui_saldo_fgts: true, // Changed to true for Sim as default
@@ -362,7 +362,28 @@ function App() {
               </div>
               <div className="result-item">
                 <span>FGTS usado:</span>
-                <span>{formData.cotista_fgts ? `${formatCurrency(formData.saldo_fgts)}` : 'R$0.00'}</span>
+                <span>{formData.cotista_fgts && formData.possui_saldo_fgts ? formatCurrency(formData.saldo_fgts) : 'R$0,00'}</span>
+              </div>
+              <div className="result-item">
+                <span>Valor Financiado:</span>
+                <span>{formatCurrency(formData.valor_apartamento - formData.entrada - (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0))}</span>
+              </div>
+              <div className="result-item">
+                <span>Renda Familiar:</span>
+                <span>{ 
+                  formData.renda_familiar === 'até_2850' ? 'Até R$2.850,00' :
+                  formData.renda_familiar === '2850_4700' ? 'R$2.850,01 a R$4.700,00' :
+                  formData.renda_familiar === '4700_8000' ? 'R$4.700,01 a R$8.000,00' :
+                  formData.renda_familiar === '8000_12000' ? 'R$8.000,01 a R$12.000,00' : ''
+                }</span>
+              </div>
+              <div className="result-item">
+                <span>Regime de Trabalho:</span>
+                <span>{formData.cotista_fgts ? 'CLT' : 'Autônomo'}</span>
+              </div>
+              <div className="result-item">
+                <span>Possui Dependentes:</span>
+                <span>{formData.possui_dependentes ? 'Sim' : 'Não'}</span>
               </div>
               <div className="result-item">
                 <span>Prazo:</span>
@@ -370,11 +391,19 @@ function App() {
               </div>
               <div className="result-item">
                 <span>Taxa de Juros:</span>
-                <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual} a.a.` : '9% a.a. (padrão)'}</span>
+                <span>{formData.taxa_juros_anual ? `${formData.taxa_juros_anual}` : '9% a.a. (padrão)'}</span>
               </div>
               <div className="result-item">
                 <span>Parcela estimada:</span>
                 <span>{formatCurrency(parcelaMensal)}</span>
+              </div>
+              <div className="result-item">
+                <span>Total a pagar:</span>
+                <span>{formatCurrency(parcelaMensal * formData.prazo_anos * 12)}</span>
+              </div>
+              <div className="result-item">
+                <span>Custo total do financiamento:</span>
+                <span>{formatCurrency((parcelaMensal * formData.prazo_anos * 12) - (formData.valor_apartamento - formData.entrada - (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0)))}</span>
               </div>
             </div>
           </div>
