@@ -63,7 +63,7 @@ function App() {
           ...prev,
           ip: data.ip,
           cidade: data.city || '',
-          estado: data.region || ''
+          estado: data.region_code || ''
         }));
       } catch (error) {
         console.error("Couldn't fetch IP or location data:", error);
