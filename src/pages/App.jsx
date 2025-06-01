@@ -124,10 +124,6 @@ function App() {
     setParcelaMensal(parcela);
     setIsSubmitted(true);
     
-    // Calculate value being financed
-    const valorFinanciado = formData.valor_apartamento - formData.entrada - 
-      (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0);
-    
     const leadData = {
       email: formData.email,
       celular: formData.celular.replace(/\D/g, ''), // Remove caracteres não numéricos
