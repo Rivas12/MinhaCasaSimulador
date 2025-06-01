@@ -1,12 +1,61 @@
-# React + Vite
+# MinhaCasaSimulador
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Simulador web para auxiliar no planejamento e visualização de casas, desenvolvido com React e Vite.
 
-Currently, two official plugins are available:
+## Tecnologias Utilizadas
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [React](https://react.dev/)
+- [Vite](https://vitejs.dev/)
+- [ESLint](https://eslint.org/)
 
-## Expanding the ESLint configuration
+## Como rodar o projeto
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Clone o repositório:**
+   ```bash
+   git clone https://github.com/seuusuario/minhacasasimulador.git
+   cd minhacasasimulador
+   ```
+
+2. **Instale as dependências:**
+   ```bash
+   npm install
+   ```
+
+3. **Inicie o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Acesse no navegador:**
+   ```
+   http://localhost:5173
+   ```
+
+## Estrutura de Pastas
+
+```
+public/
+  ├── robots.txt
+  └── sitemap.xml
+src/
+  └── ... (componentes React)
+```
+
+## SEO
+
+- Arquivo `robots.txt` e `sitemap.xml` configurados em `/public` para melhor indexação nos buscadores.
+
+## Scripts Disponíveis
+
+- `npm run dev` — Inicia o servidor de desenvolvimento
+- `npm run build` — Gera a versão de produção
+- `npm run preview` — Visualiza a build de produção localmente
+- `npm run lint` — Executa o ESLint
+
+## Contribuição
+
+Sinta-se à vontade para abrir issues ou pull requests!
+
+---
+
+Projeto criado com [Vite](https://vitejs.dev/) e [React](https://react.dev/).
