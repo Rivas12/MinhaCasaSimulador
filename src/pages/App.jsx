@@ -6,6 +6,7 @@ import { NumericFormat, PatternFormat } from 'react-number-format'
 import { supabase } from '../utils/supabaseClient'
 
 function App() {
+  <Analytics /> // Componente de analytics do Vercel para rastreamento de uso
   const navigate = useNavigate();
   const inputRefs = useRef({});
   
