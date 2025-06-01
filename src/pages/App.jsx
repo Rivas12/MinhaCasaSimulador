@@ -17,7 +17,7 @@ function App() {
     possui_saldo_fgts: true,
     saldo_fgts: 0,
     taxa_juros_anual: '4,25%',
-    prazo_anos: 10,
+    prazo_anos: 20,
     email: '',
     celular: '',
     concorda_termos: false,
