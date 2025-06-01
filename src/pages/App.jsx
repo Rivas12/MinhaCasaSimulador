@@ -78,7 +78,7 @@ function App() {
     const entrada = parseFloat(formData.entrada || 0);
     
     // Use actual FGTS balance if applicable
-    const fgtsUsado = (formData.cotista_fgts && formData.possui_saldo_fgts) 
+    const fgtsUsado = (formData.cotista_fgts) 
       ? parseFloat(formData.saldo_fgts || 0) 
       : 0;
       
