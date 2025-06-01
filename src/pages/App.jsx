@@ -160,7 +160,7 @@ function App() {
       valor_entrada: formData.entrada,
       renda_familiar: formData.renda_familiar,
       prazo_anos: formData.prazo_anos,
-      saldo_fgts: formData.saldo_fgts || 0,
+      saldo_fgts: formData.saldo_fgts,
       regime_de_trabalho: formData.cotista_fgts ? "CLT" : "Autônomo",
       possui_fgts: formData.possui_saldo_fgts,
       possui_dependentes: formData.possui_dependentes,
