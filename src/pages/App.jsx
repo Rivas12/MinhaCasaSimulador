@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { Analytics } from "@vercel/analytics/next"
 import './App.css'
 import { NumericFormat, PatternFormat } from 'react-number-format'
 import { supabase } from '../utils/supabaseClient'
