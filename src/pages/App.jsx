@@ -81,7 +81,7 @@ function App() {
     const entrada = parseFloat(formData.entrada || 0);
     
     // Use actual FGTS balance if applicable
-    const fgtsUsado = (formData.cotista_fgts && formData.possui_saldo_fgts) 
+    const fgtsUsado = (formData.cotista_fgts) 
       ? parseFloat(formData.saldo_fgts || 0) 
       : 0;
       
@@ -108,17 +108,43 @@ function App() {
   };
 
   const salvarLead = async (lead) => {
-    const { data, error } = await supabase
+    // Busca lead existente por email ou celular
+    const { data: existing, error: fetchError } = await supabase
       .from('leads')
-      .insert([lead])
-      .select();
-    
-    if (error) {
-      console.error('Erro ao salvar lead:', error);
-      return { success: false, error };
+      .select('*')
+      .or(`email.eq.${lead.email},celular.eq.${lead.celular}`)
+      .maybeSingle();
+
+    if (fetchError) {
+      console.error('Erro ao buscar lead!');
+      return { success: false, error: fetchError };
     }
-    
-    return { success: true, data };
+
+    if (existing) {
+      // Incrementa o número de cotações
+      const numero_cotacoes = (existing.numero_cotacoes || 1) + 1;
+      const { data, error } = await supabase
+        .from('leads')
+        .update({ ...lead, numero_cotacoes })
+        .eq('id', existing.id)
+        .select();
+      if (error) {
+        console.error('Erro ao atualizar lead!');
+        return { success: false, error };
+      }
+      return { success: true, data };
+    } else {
+      // Primeiro registro
+      const { data, error } = await supabase
+        .from('leads')
+        .insert([{ ...lead, numero_cotacoes: 1 }])
+        .select();
+      if (error) {
+        console.error('Erro ao salvar lead!');
+        return { success: false, error };
+      }
+      return { success: true, data };
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -126,14 +152,10 @@ function App() {
     const parcela = calcularParcela();
     setParcelaMensal(parcela);
     setIsSubmitted(true);
-    
-    // Calculate value being financed
-    const valorFinanciado = formData.valor_apartamento - formData.entrada - 
-      (formData.cotista_fgts && formData.possui_saldo_fgts ? formData.saldo_fgts : 0);
-    
+
     const leadData = {
       email: formData.email,
-      celular: formData.celular.replace(/\D/g, ''), // Remove caracteres não numéricos
+      celular: formData.celular.replace(/\D/g, ''),
       ip: formData.ip,
       cidade: formData.cidade,
       estado: formData.estado,
@@ -141,27 +163,24 @@ function App() {
       valor_entrada: formData.entrada,
       renda_familiar: formData.renda_familiar,
       prazo_anos: formData.prazo_anos,
-      saldo_fgts: formData.saldo_fgts || 0,
+      saldo_fgts: formData.saldo_fgts,
       regime_de_trabalho: formData.cotista_fgts ? "CLT" : "Autônomo",
       possui_fgts: formData.possui_saldo_fgts,
       possui_dependentes: formData.possui_dependentes,
       concorda_termos: formData.concorda_termos,
-      created_at: new Date().toISOString()
-      // Removi os campos que não existem na tabela
+      ultima_cotacao: new Date().toISOString()
+      // numero_cotacoes será tratado no salvarLead
     };
-    
-    // Print to console for debugging
-    console.log(leadData);
-    
+
     try {
       const result = await salvarLead(leadData);
       if (result.success) {
-        console.log('Lead salvo com sucesso:', result.data);
+        console.log('Lead salvo com sucesso!');
       } else {
-        console.error('Erro ao salvar lead:', result.error);
+        console.error('Erro ao salvar lead!');
       }
     } catch (error) {
-      console.error('Erro ao salvar lead:', error);
+      console.error('Erro ao salvar lead!');
     }
   };
   
