@@ -193,17 +193,26 @@ function App() {
 
   const handleNumberFormatChange = (name, values) => {
     const { floatValue } = values;
-    setFormData(prev => ({
-      ...prev,
-      [name]: floatValue || 0
-    }));
+    
+    // Special case for saldo_fgts - set possui_saldo_fgts to true when a value > 0 is entered
+    if (name === 'saldo_fgts' && floatValue > 0) {
+      setFormData(prev => ({
+        ...prev,
+        [name]: floatValue || 0,
+        possui_saldo_fgts: true
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: floatValue || 0
+      }));
+    }
   };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
