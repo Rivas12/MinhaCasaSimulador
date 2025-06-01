@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 import './App.css'
 import { NumericFormat, PatternFormat } from 'react-number-format'
@@ -6,6 +6,7 @@ import { supabase } from '../utils/supabaseClient'
 
 function App() {
   const navigate = useNavigate();
+  const inputRefs = useRef({});
   
   const [formData, setFormData] = useState({
     valor_apartamento: '',
@@ -242,13 +243,14 @@ function App() {
                 thousandSeparator="."
                 decimalSeparator=","
                 prefix="R$ "
-                decimalScale={2}
-                fixedDecimalScale
-                placeholder="R$ 0,00"
+                decimalScale={0}
+                placeholder="R$ 0"
                 onValueChange={(values) => handleNumberFormatChange('valor_apartamento', values)}
                 value={formData.valor_apartamento}
                 required
                 className="simple-input"
+                getInputRef={(el) => inputRefs.current.valor_apartamento = el}
+                allowNegative={false}
               />
             </div>
 
@@ -260,13 +262,14 @@ function App() {
                 thousandSeparator="."
                 decimalSeparator=","
                 prefix="R$ "
-                decimalScale={2}
-                fixedDecimalScale
-                placeholder="R$ 0,00"
+                decimalScale={0}
+                placeholder="R$ 0"
                 onValueChange={(values) => handleNumberFormatChange('entrada', values)}
                 value={formData.entrada}
                 required
                 className="simple-input"
+                getInputRef={(el) => inputRefs.current.entrada = el}
+                allowNegative={false}
               />
             </div>
           </div>
@@ -344,9 +347,8 @@ function App() {
                 thousandSeparator="."
                 decimalSeparator=","
                 prefix="R$ "
-                decimalScale={2}
-                fixedDecimalScale
-                placeholder="R$ 0,00"
+                decimalScale={0}
+                placeholder="R$ 0"
                 onValueChange={(values) => handleNumberFormatChange('saldo_fgts', values)}
                 value={formData.saldo_fgts}
                 className="simple-input"
