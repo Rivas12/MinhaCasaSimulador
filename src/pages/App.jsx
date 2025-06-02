@@ -67,7 +67,7 @@ function App() {
         
         setFormData(prev => ({
           ...prev,
-          ip: data.ip,
+          ip: data.ip || '',
           cidade: data.city || '',
           estado: data.region_code || ''
         }));
