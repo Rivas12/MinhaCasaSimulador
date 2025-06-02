@@ -59,9 +59,9 @@ function App() {
 
   // Get IP address and location on component mount
   useEffect(() => {
-    const getIpAndLocation = async () => {
+    const getIpAndLocation = async (retryAttempt = 0) => {
       try {
-        // Using ip-api.com which provides geolocation data including city and state
+        // Using ipapi.co which provides geolocation data including city and state
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
         
@@ -72,7 +72,18 @@ function App() {
           estado: data.region_code || ''
         }));
       } catch (error) {
-        console.error("Couldn't fetch IP or location data:", error);
+        console.error(`Couldn't fetch IP or location data (attempt ${retryAttempt + 1}):`, error);
+        
+        // Retry up to 3 times maximum
+        if (retryAttempt < 2) {  // < 2 means we'll have attempts 0, 1, and 2 (total of 3)
+          console.log(`Retrying IP and location fetch (${retryAttempt + 1}/3)...`);
+          // Wait 1 second before retrying
+          setTimeout(() => {
+            getIpAndLocation(retryAttempt + 1);
+          }, 1000);
+        } else {
+          console.log("Maximum retry attempts reached. Unable to fetch location data.");
+        }
       }
     };
     
