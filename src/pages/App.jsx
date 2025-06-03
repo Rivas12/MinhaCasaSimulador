@@ -62,7 +62,7 @@ function App() {
     const getIpAndLocation = async (retryAttempt = 0) => {
       try {
         // Using ip-api.com which provides geolocation data including city and state
-        const response = await fetch('https://ipapi.co/json/');
+        const response = await fetch('https://ipwho.is/');
         const data = await response.json();
         
         setFormData(prev => ({
